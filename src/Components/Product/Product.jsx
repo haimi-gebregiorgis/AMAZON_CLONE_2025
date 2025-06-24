@@ -12,7 +12,7 @@ function Product() {
     axios
       .get(`${productUrl}/products`)
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
         setProducts(res.data);
         setIsLoading(false);
       })
@@ -28,7 +28,13 @@ function Product() {
       ) : (
         <section className={classes.product_container}>
           {products?.map((singleProduct) => {
-            return <ProductCard product={singleProduct} key={singleProduct.id} renderAdd={true}/>;
+            return (
+              <ProductCard
+                product={singleProduct}
+                key={singleProduct.id}
+                renderAdd={true}
+              />
+            );
           })}
         </section>
       )}

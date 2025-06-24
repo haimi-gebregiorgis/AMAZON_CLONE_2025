@@ -7,9 +7,10 @@ import { BiCart } from "react-icons/bi";
 import LowerHeader from "./Lower.Header";
 import classes from "./Header.module.css";
 import { DataContext } from "../DataProvider/DataProvider";
+import { auth } from "../../Utility/firebase";
 
 const Header = () => {
-  const [{ basket }] = useContext(DataContext);
+  const [{ basket, user }] = useContext(DataContext);
   const totalItem=basket?.reduce((amount, item) => item.amount + amount, 0);
 
   return (
@@ -41,7 +42,7 @@ const Header = () => {
           </select>
           <input type="text" placeholder="Search Amazon" />
           <button className={classes.searchIcon}>
-            <FaSearch size={20} />
+            <FaSearch size={38} />
           </button>
         </div>
 
@@ -57,14 +58,17 @@ const Header = () => {
             </section>
           </Link>
 
-          <Link to="/auth">
-            <div>
-              <p>Sign In</p>
-              <span>Account & Lists</span>
-            </div>
-          </Link>
-
-          <Link to="/order">
+<Link to={!user && '/auth'}>
+  <div>
+    {
+      user
+        ?<><p>Hello, {user?.email?.split("@")[0]}</p><span onClick={()=>auth.signOut()}>Sign Out</span></> 
+        :<><p>Hello, Sign In</p> <span>Account & Lists</span></> 
+    }
+   
+  </div>
+</Link>
+          <Link to="/orders">
             <p>Returns</p>
             <span>& Orders</span>
           </Link>

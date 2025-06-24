@@ -10,13 +10,13 @@ function ProductDetail() {
   const [product, setProduct] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const { productId } = useParams();
-  console.log(productId);
+  //console.log(productId);
   useEffect(() => {
     setIsLoading(true);
     axios
       .get(`${productUrl}/products/${productId}`)
       .then((response) => {
-        console.log(response.data);
+        //console.log(response.data);
         setProduct(response.data);
         setIsLoading(false);
       })
@@ -25,10 +25,19 @@ function ProductDetail() {
         setIsLoading(false);
       });
   }, []);
-  console.log(product);
+  //console.log(product);
   return (
     <LayOut>
-      {isLoading ? <Loader /> : <ProductCard product={product} flex={true} renderDesc={true} renderAdd={true}/>}
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <ProductCard
+          product={product}
+          flex={true}
+          renderDesc={true}
+          renderAdd={true}
+        />
+      )}
     </LayOut>
   );
 }
